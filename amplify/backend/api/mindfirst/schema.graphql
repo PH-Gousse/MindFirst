@@ -1,0 +1,106 @@
+type User @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    phoneNumber: String! @index(name: "byPhoneNumber", queryField: "userByPhoneNumber", sortKeyFields: ["id"])
+    email: String
+    isOnBoardingCompleted: Boolean
+    profile: Profile @hasOne
+    answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
+    status: String
+    chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type BlockedUser @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    blockerId: ID! @index(name: "byBlocker", queryField: "blockedUserByBlocker", sortKeyFields: ["id"])
+    blockeeId: ID! @index(name: "byBlockee", queryField: "blockedUserByBlockee", sortKeyFields: ["id"])
+    blocker: User @hasOne(fields: ["blockerId"])
+    blockee: User @hasOne(fields: ["blockeeId"])
+    reason: String
+}
+
+type Profile @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    firstName: String
+    lastName: String
+    birthday: String
+    gender: String
+    interestedIn: String
+    shortDescription: String
+    photos: [Photo] @hasMany(indexName: "byProfile", fields: ["id"])
+    ageRange: [Int]
+    location: String
+}
+
+type Photo @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    profileID: ID! @index(name: "byProfile", sortKeyFields: ["key"])
+    key: String!
+    position: Int!
+}
+
+type Option @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    label: String!
+}
+
+type Question @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    option1: Option! @hasOne
+    option2: Option! @hasOne
+}
+
+type Answer @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    userID: ID! @index(name: "byUser", queryField: "answerByUser", sortKeyFields: ["id"])
+    question: Question! @hasOne
+    option: Option! @hasOne
+}
+
+type Query {
+    getRankByUser(userId: ID): [Rank] @function(name: "GetRankUsers-${env}")
+}
+
+type Rank {
+    userId: ID!
+    percentage: Int
+    profile: Profile
+    answerWithSameQuestions: [AnswerWithSameQuestions]
+}
+
+type AnswerWithSameQuestions {
+    questionId: ID!
+    option1: String!
+    option2: String!
+    optionCurrentUser: String!
+    optionUser: String!
+}
+
+type ChatRoomUser @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    userId: ID! @index(name: "byUser", sortKeyFields: ["chatRoomId"])
+    chatRoomId: ID! @index(name: "byChatRoom", sortKeyFields: ["userId"])
+    user: User @belongsTo(fields: ["userId"])
+    chatRoom: ChatRoom @belongsTo(fields: ["chatRoomId"])
+}
+
+type ChatRoom @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byChatRoom", fields: ["id"])
+    messages: [Message] @hasMany(indexName: "byChatRoom", fields: ["id"])
+    lastMessageContent: String
+    lastMessageUserId: ID
+}
+
+type Message @model @auth(rules: [{allow: public}]) {
+    id: ID!
+    content: String!
+    userId: ID!
+    chatRoomId: ID! @index(name: "byChatRoom", queryField: "messagesByChatRoom", sortKeyFields: ["createdAt"])
+    user: User @hasOne(fields: ["userId"])
+    chatRoom: ChatRoom @belongsTo(fields: ["chatRoomId"])
+    createdAt: String!
+}
+
+type Subscription {
+    onCreateChatRoomUserByUserId(userId: ID!): ChatRoomUser @aws_subscribe(mutations: ["createChatRoomUser"])
+}

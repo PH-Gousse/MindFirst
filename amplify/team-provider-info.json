@@ -1,0 +1,42 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mindfirst-dev-143106-authRole",
+      "UnauthRoleArn": "arn:aws:iam::001998877078:role/amplify-mindfirst-dev-143106-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::001998877078:role/amplify-mindfirst-dev-143106-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-mindfirst-dev-143106-deployment",
+      "UnauthRoleName": "amplify-mindfirst-dev-143106-unauthRole",
+      "StackName": "amplify-mindfirst-dev-143106",
+      "StackId": "arn:aws:cloudformation:eu-west-1:001998877078:stack/amplify-mindfirst-dev-143106/6b748170-67e2-11ec-b113-0691b1ffc595",
+      "AmplifyAppId": "d348gz4petcl3s"
+    },
+    "categories": {
+      "auth": {
+        "mindfirst": {}
+      },
+      "function": {
+        "PreSignUp": {
+          "deploymentBucketName": "amplify-mindfirst-dev-143106-deployment",
+          "s3Key": "amplify-builds/PreSignUp-7745556958754a533279-build.zip"
+        },
+        "CreateAuthChallenge": {
+          "deploymentBucketName": "amplify-mindfirst-dev-143106-deployment",
+          "s3Key": "amplify-builds/CreateAuthChallenge-30643743753159735857-build.zip"
+        },
+        "VerifyAuthChallenge": {
+          "deploymentBucketName": "amplify-mindfirst-dev-143106-deployment",
+          "s3Key": "amplify-builds/VerifyAuthChallenge-734a48306b64656d5a56-build.zip"
+        },
+        "GetRankUsers": {
+          "deploymentBucketName": "amplify-mindfirst-dev-143106-deployment",
+          "s3Key": "amplify-builds/GetRankUsers-43765a6e6d78316a3456-build.zip"
+        },
+        "DefineAuthChallenge": {
+          "deploymentBucketName": "amplify-mindfirst-dev-143106-deployment",
+          "s3Key": "amplify-builds/DefineAuthChallenge-344c504f466455313561-build.zip"
+        }
+      }
+    }
+  }
+}
