@@ -35,6 +35,14 @@ With Mind First you match with mindsets first then you'll have the feeling of en
 - Security: block users
   - ![block](./assets/ReadMe/block.png)
 
+### Stack used
+
+- React Native
+- Expo
+- AWS Amplify
+  - App Sync
+  - DynamoDB
+
 #### Why did I stop the project?
 
 I had a lot of fun developing this app and learnt a lot on the way. It was fantastic to receive very nice feedback and see that this project can have a potential. People loved it as it addressed what most people don't like about dating apps:
